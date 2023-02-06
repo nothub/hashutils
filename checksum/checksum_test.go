@@ -15,7 +15,7 @@ func TestChecksum(t *testing.T) {
 
 func testChksum(t *testing.T, s string, h string, e Encoding) {
 	r := strings.NewReader(s)
-	c, err := Checksum(r, sha512.New(), e)
+	c, err := Create(r, sha512.New(), e)
 	if err != nil {
 		t.Fatal(err.Error())
 	}

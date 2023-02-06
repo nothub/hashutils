@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/nothub/hashutils"
 	"github.com/nothub/hashutils/b64"
-	_hash "hash"
+	"hash"
 	"io"
 	"log"
 	"os"
@@ -19,7 +19,7 @@ const (
 	B64
 )
 
-func Checksum(reader io.Reader, algo _hash.Hash, enco Encoding) (string, error) {
+func Create(reader io.Reader, algo hash.Hash, enco Encoding) (string, error) {
 	b, err := io.ReadAll(reader)
 	if err != nil {
 		return "", err
@@ -38,16 +38,16 @@ func Checksum(reader io.Reader, algo _hash.Hash, enco Encoding) (string, error) 
 	}
 }
 
-func Verify(reader io.Reader, chksum string, algo _hash.Hash, enco Encoding) (bool, error) {
-	c, err := Checksum(reader, algo, enco)
+func Verify(reader io.Reader, chksm string, algo hash.Hash, enco Encoding) (bool, error) {
+	c, err := Create(reader, algo, enco)
 	if err != nil {
 		return false, err
 	}
 
-	return c == chksum, nil
+	return c == chksm, nil
 }
 
-func VerifyFile(path string, chksum string, algo _hash.Hash, enco Encoding) (bool, error) {
+func VerifyFile(path string, chksm string, algo hash.Hash, enco Encoding) (bool, error) {
 	info, err := os.Stat(path)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
@@ -74,5 +74,5 @@ func VerifyFile(path string, chksum string, algo _hash.Hash, enco Encoding) (boo
 		}
 	}(file)
 
-	return Verify(file, chksum, algo, enco)
+	return Verify(file, chksm, algo, enco)
 }
