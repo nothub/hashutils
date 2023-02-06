@@ -1,4 +1,4 @@
-package format
+package mcf
 
 import (
 	"fmt"
@@ -17,16 +17,32 @@ type MCF struct {
 func (mcf *MCF) Id() string {
 	return string(mcf.id)
 }
+func (mcf *MCF) SetId(str string) error {
+	e := id(str)
+	if !e.validate() {
+		return hashutils.ErrInvalidData
+	}
+	mcf.id = e
+	return nil
+}
 
 func (mcf *MCF) Hash() string {
 	return string(mcf.hash)
+}
+func (mcf *MCF) SetHash(str string) error {
+	e := hash(str)
+	if !e.validate() {
+		return hashutils.ErrInvalidData
+	}
+	mcf.hash = e
+	return nil
 }
 
 func (mcf *MCF) Serialize() string {
 	return fmt.Sprintf("$%s$%s", mcf.id, mcf.hash)
 }
 
-func ParseMCF(str string) (*MCF, error) {
+func Parse(str string) (*MCF, error) {
 	if !strings.HasPrefix(str, "$") {
 		return nil, fmt.Errorf("%s, missing $ prefix", hashutils.ErrParseFail.Error())
 	}

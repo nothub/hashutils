@@ -1,8 +1,9 @@
-package format
+package phc
 
 import (
 	"fmt"
 	"github.com/nothub/hashutils"
+	"github.com/nothub/hashutils/mcf"
 	"strings"
 )
 
@@ -63,14 +64,23 @@ func (phc *PHC) Validate() bool {
 	return true
 }
 
-func (phc *PHC) ToMCF() MCF {
-	return MCF{
-		id:   phc.id,
-		hash: phc.hash,
+func (phc *PHC) ToMCF() (*mcf.MCF, error) {
+	var format mcf.MCF
+
+	err := format.SetId(string(phc.id))
+	if err != nil {
+		return nil, err
 	}
+
+	err = format.SetHash(string(phc.hash))
+	if err != nil {
+		return nil, err
+	}
+
+	return &format, nil
 }
 
-func ParsePHC(str string) (*PHC, error) {
+func Parse(str string) (*PHC, error) {
 	if !strings.HasPrefix(str, "$") {
 		return nil, fmt.Errorf("%s, missing $ prefix", hashutils.ErrParseFail.Error())
 	}
@@ -123,7 +133,7 @@ func ParsePHC(str string) (*PHC, error) {
 			continue
 		}
 
-		// only non-kv-pair elements left are salt and hash
+		// only non-kv-pair elements left (salt and hash)
 		if len(split) == 1 {
 			phc.salt = salt(t)
 			phc.hash = hash(split[0])

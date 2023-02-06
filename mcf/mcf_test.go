@@ -1,4 +1,4 @@
-package format
+package mcf
 
 import (
 	"testing"
@@ -6,7 +6,7 @@ import (
 
 func TestMCF(t *testing.T) {
 	str := "$foo$bar"
-	mcf, err := ParseMCF(str)
+	mcf, err := Parse(str)
 	if err != nil {
 		t.Fatal(err.Error())
 	}

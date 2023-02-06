@@ -1,4 +1,4 @@
-package format
+package phc
 
 import (
 	"fmt"
@@ -15,12 +15,10 @@ func (id *id) serialize() string {
 
 func (id *id) validate() bool {
 	if *id == "" {
-		// required, empty is not allowed
 		return false
 	}
 	// TODO
-	// PHC: [a-z0-9-]     (required)
-	// MCF: [a-zA-Z0-9./] (required)
+	// [a-z0-9-]
 	return true
 }
 
@@ -32,11 +30,11 @@ func (v *version) serialize() string {
 
 func (v *version) validate() bool {
 	if *v == "" {
-		// optional, empty is allowed
+		// optional
 		return true
 	}
 	// TODO
-	// PHC: [0-9]
+	// [0-9]
 	return true
 }
 
@@ -58,11 +56,11 @@ func (p *params) serialize() string {
 
 func (p *params) validate() bool {
 	if len(*p) == 0 {
-		// optional, empty is allowed
+		// optional
 		return true
 	}
 	// TODO
-	// PHC: [a-z0-9-]=[a-zA-Z0-9/+.-]
+	// [a-z0-9-]=[a-zA-Z0-9/+.-]
 	return true
 }
 
@@ -74,11 +72,11 @@ func (s *salt) serialize() string {
 
 func (s *salt) validate() bool {
 	if *s == "" {
-		// optional, empty is allowed
+		// optional
 		return true
 	}
 	// TODO
-	// PHC: [a-zA-Z0-9/+.-]
+	// [a-zA-Z0-9/+.-]
 	return true
 }
 
@@ -90,11 +88,10 @@ func (h *hash) serialize() string {
 
 func (h *hash) validate() bool {
 	if *h == "" {
-		// optional, empty is allowed
+		// optional
 		return true
 	}
 	// TODO
-	// PHC: B64 format without padding (=) (requires salt)
-	// MCF: [a-zA-Z0-9./]                  (required)
+	// B64 format without padding (=) (requires salt)
 	return true
 }
