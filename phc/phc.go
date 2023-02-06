@@ -7,7 +7,8 @@ import (
 	"strings"
 )
 
-// PHC string format specifies encodings for the serialization of a hash value and its metadata.
+// PHC string format specifies encodings for
+// the serialization of a hash value and its metadata.
 // https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md
 type PHC struct {
 	id      id
@@ -82,7 +83,7 @@ func (phc *PHC) ToMCF() (*mcf.MCF, error) {
 
 func Parse(str string) (*PHC, error) {
 	if !strings.HasPrefix(str, "$") {
-		return nil, fmt.Errorf("%s, missing $ prefix", hashutils.ErrParseFail.Error())
+		return nil, hashutils.ErrMissingPrefix
 	}
 
 	str = strings.TrimPrefix(str, "$")
@@ -90,10 +91,10 @@ func Parse(str string) (*PHC, error) {
 
 	split := strings.Split(str, "$")
 	if len(split) < 1 {
-		return nil, fmt.Errorf("%s, missing elements", hashutils.ErrParseFail.Error())
+		return nil, hashutils.ErrElementCount
 	}
 	if len(split) > 5 {
-		return nil, fmt.Errorf("%s, too many elements", hashutils.ErrParseFail.Error())
+		return nil, hashutils.ErrElementCount
 	}
 
 	var phc PHC
@@ -143,7 +144,7 @@ func Parse(str string) (*PHC, error) {
 	}
 
 	if !phc.Validate() {
-		return nil, fmt.Errorf("%s, data is not valid", hashutils.ErrParseFail.Error())
+		return nil, hashutils.ErrInvalidData
 	}
 
 	return &phc, nil

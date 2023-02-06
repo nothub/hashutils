@@ -6,9 +6,9 @@ import (
 	"strings"
 )
 
-// Modular Crypt Format
+// MCF (Modular Crypt Format) specifies encodings for
+// the serialization of a hash value and its metadata.
 // https://passlib.readthedocs.io/en/stable/modular_crypt_format.html
-
 type MCF struct {
 	id   id
 	hash hash
@@ -44,7 +44,7 @@ func (mcf *MCF) Serialize() string {
 
 func Parse(str string) (*MCF, error) {
 	if !strings.HasPrefix(str, "$") {
-		return nil, fmt.Errorf("%s, missing $ prefix", hashutils.ErrParseFail.Error())
+		return nil, hashutils.ErrMissingPrefix
 	}
 
 	str = strings.TrimPrefix(str, "$")
@@ -52,7 +52,7 @@ func Parse(str string) (*MCF, error) {
 
 	split := strings.Split(str, "$")
 	if len(split) != 2 {
-		return nil, hashutils.ErrParseFail
+		return nil, hashutils.ErrElementCount
 	}
 
 	return &MCF{
