@@ -1,0 +1,15 @@
+*
+!*/
+
+!/.gitattributes
+!/.gitignore
+!/.github/**/*.yaml
+
+!/go.mod
+!/go.sum
+!/**/*.go
+
+!/Makefile
+
+!/LICENSE.txt
+!/README.md
