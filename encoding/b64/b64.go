@@ -1,5 +1,5 @@
 // Package b64 does standard Base64 (RFC 4648, sect 4) encoding and decoding,
-// except that padding (=) signs are omitted, and whitespace are not allowed.
+// except that padding (=) signs are omitted, and whitespaces are not allowed.
 // b64 is intended to be used for handling PHC format serialized strings.
 // https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md#b64
 package b64
