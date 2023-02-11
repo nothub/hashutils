@@ -26,7 +26,7 @@ func (phc *PHC) Version() string {
 	return string(phc.version)
 }
 
-func (phc *PHC) Params() map[string]string {
+func (phc *PHC) Params() params {
 	return phc.params
 }
 
@@ -98,7 +98,6 @@ func Parse(str string) (*PHC, error) {
 	}
 
 	var phc PHC
-	phc.params = make(params)
 
 	// hash algo identifier
 	phc.id = id(split[0])
@@ -112,11 +111,7 @@ func Parse(str string) (*PHC, error) {
 			if strings.Contains(t, ",") {
 				// list of kv pairs
 				for _, kv := range strings.Split(t, ",") {
-					pair := strings.SplitN(kv, "=", 2)
-					if len(pair) < 2 {
-						return nil, hashutils.ErrParseFail
-					}
-					phc.params[pair[0]] = pair[1]
+					phc.params = append(phc.params, paramFromString(kv))
 				}
 
 			} else {
@@ -128,7 +123,10 @@ func Parse(str string) (*PHC, error) {
 				if pair[0] == "v" && phc.version == "" {
 					phc.version = version(pair[1])
 				} else {
-					phc.params[pair[0]] = pair[1]
+					phc.params = append(phc.params, param{
+						K: pair[0],
+						V: pair[1],
+					})
 				}
 			}
 			continue

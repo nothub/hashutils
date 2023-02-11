@@ -38,26 +38,38 @@ func (v *version) validate() bool {
 	return true
 }
 
-type params map[string]string
+type param struct {
+	K string
+	V string
+}
 
-func (p *params) serialize() string {
+func paramFromString(str string) param {
+	pair := strings.SplitN(str, "=", 2)
+	return param{
+		K: pair[0],
+		V: pair[1],
+	}
+}
+
+type params []param
+
+func (p params) serialize() string {
 	var pairs []string
-
-	for k, v := range *p {
-		pairs = append(pairs, fmt.Sprintf("%s=%s", k, v))
+	for _, pa := range p {
+		pairs = append(pairs, fmt.Sprintf("%s=%s", pa.K, pa.V))
 	}
-
-	if len(pairs) == 0 {
-		return ""
-	}
-
 	return "$" + strings.Join(pairs, ",")
 }
 
-func (p *params) validate() bool {
-	if len(*p) == 0 {
+func (p params) validate() bool {
+	if len(p) == 0 {
 		// optional
 		return true
+	}
+	for _, pa := range p {
+		if pa.K == "" || pa.V == "" {
+			return false
+		}
 	}
 	// TODO
 	// [a-z0-9-]=[a-zA-Z0-9/+.-]
