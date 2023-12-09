@@ -2,7 +2,7 @@ package mcf
 
 import (
 	"fmt"
-	"github.com/nothub/hashutils"
+	"hub.lol/hashutils"
 	"strings"
 )
 
