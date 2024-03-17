@@ -1,3 +1,3 @@
-module hub.lol/hashutils
+module github.com/nothub/hashutils
 
-go 1.19
+go 1.22
