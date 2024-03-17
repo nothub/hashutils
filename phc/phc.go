@@ -2,8 +2,8 @@ package phc
 
 import (
 	"fmt"
-	"hub.lol/hashutils"
-	"hub.lol/hashutils/mcf"
+	"github.com/nothub/hashutils"
+	"github.com/nothub/hashutils/mcf"
 	"strings"
 )
 

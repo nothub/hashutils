@@ -2,7 +2,7 @@ package chksum
 
 import (
 	"crypto/sha512"
-	"hub.lol/hashutils/encoding"
+	"github.com/nothub/hashutils/encoding"
 	"strings"
 	"testing"
 )

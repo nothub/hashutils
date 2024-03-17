@@ -1,6 +1,6 @@
 # hashutils
 
-[![Go Reference](https://pkg.go.dev/badge/hub.lol/hashutils.svg)](https://pkg.go.dev/hub.lol/hashutils)
+[![Go Reference](https://pkg.go.dev/badge/github.com/nothub/hashutils.svg)](https://pkg.go.dev/github.com/nothub/hashutils)
 
 Some utilities for working with hashes in go.
 
